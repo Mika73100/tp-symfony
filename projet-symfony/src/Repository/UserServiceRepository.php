@@ -14,30 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method UserService[]    findAll()
  * @method UserService[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
 class UserServiceRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, UserService::class);
-    }
+{public function __construct(ManagerRegistry $registry){parent::__construct($registry, UserService::class);}
 
-    public function add(UserService $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
+public function add(UserService $entity, bool $flush = false): void{$this->getEntityManager()->persist($entity);if ($flush) {$this->getEntityManager()->flush();}}
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
+public function remove(UserService $entity, bool $flush = false): void{$this->getEntityManager()->remove($entity);if ($flush) {$this->getEntityManager()->flush();}}
 
-    public function remove(UserService $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
 
 //    /**
 //     * @return UserService[] Returns an array of UserService objects

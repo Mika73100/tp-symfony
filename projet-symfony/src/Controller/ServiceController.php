@@ -20,8 +20,8 @@ class ServiceController extends AbstractController
         ]);
     }
 
+        //je crée la route :
         /*** @Route("/service/create", name="app_service_create")*/
-
         public function creatAction(){
         $entityManager = $this->getDoctrine()->getManager();
         $product = new UserService();
@@ -35,24 +35,29 @@ class ServiceController extends AbstractController
         return new Response('Personnel ajouté ');
     }
 
+        //je crée la route :
         /*** @Route("/service/search", name="app_service_search")*/
-
         //Je crée une nouvelle méthode
         public function searchAction(){
-        $UserServiceRepository = $this->getDoctrine()->getRepository();
-        // Récupèrer l'objet
-        $UserServiceRepository = $UserServiceRepository->findby;
+        $repository = $this->getDoctrine()->getRepository(UserService::class);
+        // Récupèrer l'objet en fonction de l'Id 
+        $product = $repository->find($id);
         // Rechercher un seul produit par son nom
-        $UserServiceRepository = $UserServiceRepository->findOneBy(['name' => 'Souris']);
+        $produit = $repository->findOneBy(['nom' => 'Mika']);
+        // Rechercher un seul produit par son nom et son prix
+        $produit = $repository->findOneBy(['nom' => 'Mika','age' => '15',]);
         //ici inscrire le nom de la table visé
-        $UserServiceRepository = new UserService();
+        $repository = new UserService('nom','age');
         // Rechercher des produits en fonction de multiples conditions
-        $UserServiceRepository->findBy(
-            ['setNom' => 'nom'],
-            ['setAge' => 'age'], 
+        $product = $repository->findBy(
+        ['nom' => 'Mika'],
+        ['age' => '15'], // le deuxième paramètre permet de définir l'ordre 
+        10, // le troisième la limite
+        ('Limite en Mysql'),
+        0 // et à partir duquel on récupère (OFFSET en MySQL)
         );
-        return new Response('Personnel rechercher');
-
+        // Retrouver tous les produits
+        $users = $repository->findAll();
     }
 }
 ?>
